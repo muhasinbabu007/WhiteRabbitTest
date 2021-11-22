@@ -62,10 +62,16 @@ Create a .env in root directory then edit it with your settings. You will need:
 
     $ npm start
 
-
+---
 ## API Routes
 
+- GET /users - Get whole user list
+- GET /users/< user-id> - Get specific  user data
+- POST /users/create -  Add new user to system
+
+
+## Web Pages
 
 - GET /users - Get whole user list
-- GET /users/<user-id> - Get specific  user data
-- POST /users/create -  Add new user to system
+- GET /users/id - Get specific  user data
+- GET /users/create -  Add new user to system
