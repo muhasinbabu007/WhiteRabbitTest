@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>White Rabbit</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Users </h1>
+    <div>
+        <table >
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>email</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody class="userlist">
+
+            </tbody>
+        </table>
+
+    </div>
+    <a href="/users/create">Add User</a>
+
+    <script>
+        $(document).ready(function () {
+            let resp="";
+            $.ajax({
+                type: "get",
+                url: "/api/users",
+                success: function (result, status, xhr) {
+                    if (result.data.responseParameter.length) {
+                        result.data.responseParameter.map(function(item){
+                            resp += "<tr><td>"+ item.firstName + " " + item.lastName +"</td>";
+                            resp += "<td>"+ item.email +"</td>";
+                            resp += '<td><a href="/users/'+ item.id+'">view</a><td></tr>';
+                        })
+                    } else {
+                        resp = "<tr><td colspan='3'>No Data Found<td></tr>"
+                    }
+                    $('.userlist').html(resp);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                    alert("Error  " + xhr.status + " " + xhr.responseJSON.error.message)
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>White Rabbit</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <h1>Add User </h1>
+
+    <form id="createUser">
+        <label>FIRST NAME* :</label>
+        <input type="text" name="firstName" required></input><br><br>
+        <label>LAST NAME* :</label>
+        <input type="text" name="lastName" required></input><br><br>
+        <label>INTRODUCTION* :</label>
+        <textarea type="text" name="introduction" required></textarea><br><br>
+        <label>EMAIL* :</label>
+        <input type="text" name="email" required></input><br><br>
+        <label>PHONENUMBER* :</label>
+        <input type="text" name="phoneNumber" required></input><br><br>
+        <label>ACHIEVEMENTS :</label>
+        <textarea type="text" name="achievements"></textarea><br><br>
+        <label>EXPERIENCE :</label>
+        <textarea type="text" name="experience"></textarea><br><br>
+        <input type="button" value="Submit" onclick="createUser()"></input>
+    </form>
+
+    <a href="\users">User List</a>
+
+
+    <script>
+        function createUser(){
+            $.ajax({
+                type: "POST",
+                url: "/api/users",
+                data: $("#createUser").serialize(),
+                success: function (result, status, xhr) {
+                    $('#createUser')[0].reset();
+                    alert("Data Saved")
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                    alert("Error  " + xhr.status + " " + xhr.responseJSON.error.message)
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>

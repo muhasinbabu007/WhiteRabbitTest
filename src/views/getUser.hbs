@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>White Rabbit</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <style>
+        table,
+        th,
+        td {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Users </h1>
+    <div class="userData">
+        
+
+    </div>
+    <a href="/users">View Users</a>
+
+    <script>
+        $(document).ready(function () {
+            var url = window.location.pathname;
+            var id = url.substring(url.lastIndexOf('/') + 1);
+            let resp = "";
+            $.ajax({
+                type: "get",
+                url: "/api/users/"+id,
+                success: function (result, status, xhr) {
+                            console.log(result)
+                            let user = result.data.responseParameter;
+                    if (user) {
+
+                        resp = `
+                        ID      :${user.id} \<br>
+                        FIRSTNAME       :${user.firstName} \<br>
+                        LASTNAME        :${user.lastName} \<br>
+                        EMAIL       :${user.email} \<br>
+                        EXPERIENCE      :${user.experience} \<br>
+                        CREATEDAT       :${user.createdAt} \<br>
+                        INTRODUCTION        :${user.introduction} \<br>
+                        PHONENUMBER     :${user.phoneNumber} \<br>
+                        ACHIEVEMENTS        :${user.achievements} \<br>
+                        UPDATEDAT       :${user.updatedAt}`; 
+                        
+                    } else {
+                        resp = "No Data Found"
+                    }
+                    $('.userData').html(resp);
+                },
+                error: function (xhr, status, error) {
+                    console.log(xhr)
+                    alert("Error  " + xhr.status + " " + xhr.responseJSON.error.message)
+                }
+            });
+        })
+    </script>
+
+</body>
+
+</html>
